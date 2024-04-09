@@ -1,6 +1,6 @@
 ---
 name: SignElevator
-version: 0.0.1
+version: 1.0.0
 main: Mencoreh\SignElevator\Main
 api: 5.13.0
 src-namespace-prefix: Mencoreh\SignElevator
