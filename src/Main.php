@@ -67,13 +67,12 @@ class Main extends PluginBase implements Listener{
         $z = (int) $signPosition->getZ();
 
         $playerLocation = $player->getLocation();
-        $playerY = $playerLocation->getY();
         $world = $playerLocation->getWorld();
         $yaw = $playerLocation->getYaw();
         $pitch = $playerLocation->getPitch();
 
         if($direction === "up") {
-            for ($count = $y + 1; $count < $world->getMaxY(); $count++) {
+            for ($count = $y + 1; $count <= $world->getMaxY(); $count++) {
                 $block = $world->getBlockAt($x, $count, $z);
                 $blockAbove = $world->getBlockAt($x, $count + 1, $z);
                 $blockAboveTwo = $world->getBlockAt($x, $count + 2, $z);
@@ -84,11 +83,16 @@ class Main extends PluginBase implements Listener{
             }
             $player->sendMessage("§cNo se pudo encontrar una ubicación válida para teletransportarse.");
         } elseif ($direction === "down") {
-            for ($count = $y - 1; $count > $world->getMinY(); $count--) {
+            $isFirstTerrain = true;
+            for ($count = $y - 1; $count >= $world->getMinY(); $count--) {
                 $block = $world->getBlockAt($x, $count, $z);
                 $blockAbove = $world->getBlockAt($x, $count + 1, $z);
                 $blockAboveTwo = $world->getBlockAt($x, $count + 2, $z);
-                if ((!$block->isTransparent() && $block->getPosition()->distance($playerLocation) > 3) && ($blockAbove->isTransparent() && $blockAboveTwo->isTransparent())) {
+                if (!$block->isTransparent() && ($blockAbove->isTransparent() && $blockAboveTwo->isTransparent())) {
+                    if($isFirstTerrain === true) {
+                        $isFirstTerrain = false;
+                        continue;
+                    }
                     $player->teleport(new Location($x + 0.5, $count + 1, $z + 0.5, $world, $yaw, $pitch));
                     return;
                 }
