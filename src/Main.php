@@ -33,12 +33,12 @@ class Main extends PluginBase implements Listener{
             if ($block instanceof BaseSign) {
                 $lines = $block->getText()->getLines();
 
-                if ($lines[0] === "[§aElevator§0]" && $lines[1] == "§aUp") {
+                if ($lines[0] === "§1[Elevator]" && $lines[1] == "§0Up") {
                     $event->cancel();
                     $this->teleportPlayer($player, $block, "up");
                 }
 
-                if ($lines[0] === "[§cElevator§0]" && $lines[1] == "§cDown") {
+                if ($lines[0] === "§1[Elevator]" && $lines[1] == "§0Down") {
                     $event->cancel();
                     $this->teleportPlayer($player, $block, "down");
                 }
@@ -52,11 +52,11 @@ class Main extends PluginBase implements Listener{
         $lines = $text->getLines();
 
         if (strtolower($lines[0]) == "[elevator]" && strtolower($lines[1]) == "up") {
-            $event->setNewText(new SignText(["[§aElevator§0]", "§aUp"]));
+            $event->setNewText(new SignText(["§1[Elevator]", "§0Up"]));
         }
 
         if (strtolower($lines[0]) == "[elevator]" && strtolower($lines[1]) == "down") {
-            $event->setNewText(new SignText(["[§cElevator§0]", "§cDown"]));
+            $event->setNewText(new SignText(["§1[Elevator]", "§0Down"]));
         }
     }
 
